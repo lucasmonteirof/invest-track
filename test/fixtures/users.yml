@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  login: lucasmonteirof
+  password: 123456
+  name: Lucas Monteiro
+  date_of_birth: 1994-10-19
+
+two:
+  login: MyString
+  password: MyString
+  name: MyString
+  date_of_birth: 2025-06-05
