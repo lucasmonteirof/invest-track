@@ -1,15 +1,49 @@
 require "test_helper"
-require "minitest/mock"
 
 class UserTest < ActiveSupport::TestCase
-  test "age method" do
+  setup do
     @user = users(:one)
-    mock = Minitest::Mock.new
-    mock.expect(:today, Date.new(2025, 6, 5))
+    @user.date_of_birth = Date.new(2010, 6, 15)
+    travel_to Date.new(2020, 6, 15)
+  end
 
-    Date.stub :today, mock.today do
-      puts @user.age
-      assert @user.age == 30
+  test "age method" do
+    assert @user.age == 10
+  end
+
+  test "age method when 1 year before birthday" do
+    travel -1.year do
+      assert @user.age == 9
+    end
+  end
+
+  test "age method when 1 year after birthday" do
+    travel 1.year do
+      assert @user.age == 11
+    end
+  end
+
+  test "age method when 1 month before birthday" do
+    travel -1.month do
+      assert @user.age == 9
+    end
+  end
+
+  test "age method when 1 month after birthday" do
+    travel 1.month do
+      assert @user.age == 10
+    end
+  end
+
+  test "age method when 1 day before birthday" do
+    travel -1.day do
+      assert @user.age == 9
+    end
+  end
+
+  test "age method when 1 day after birthday" do
+    travel 1.day do
+      assert @user.age == 10
     end
   end
 end
