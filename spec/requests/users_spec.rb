@@ -26,6 +26,16 @@ RSpec.describe "Users", type: :request do
         subject
         expect(response).to have_http_status(:created)
       end
+
+      it "does not persist :password" do
+        subject
+        expect(User.last.password).to be_nil
+      end
+
+      it "digests the password" do
+        subject
+        expect(User.last.password_digest).not_to be_nil
+      end
     end
 
     context "with invalid params" do
