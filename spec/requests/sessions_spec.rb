@@ -44,4 +44,26 @@ RSpec.describe "Sessions", type: :request do
       end
     end
   end
+
+  describe "DELETE /logout" do
+    subject { delete logout_path }
+
+    before do
+      create(:user, login: "johndoe", password: "password123")
+      post login_path, params: { login: "johndoe", password: "password123" }
+      subject
+    end
+
+    it "returns HTTP status :found" do
+      expect(response).to have_http_status(:found)
+    end
+
+    it "redirects to login page" do
+      expect(response).to redirect_to(login_path)
+    end
+
+    it "clears the user_id from the session" do
+      expect(session[:user_id]).to be_nil
+    end
+  end
 end
