@@ -15,6 +15,7 @@ gem "solid_cable"
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
+gem "bcrypt", "~> 3.1", ">= 3.1.12"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -29,4 +30,5 @@ end
 group :test do
   gem "rspec-rails", "~> 8.0"
   gem "factory_bot_rails"
+  gem "rails-controller-testing", "~> 1.0", ">= 1.0.5"
 end
