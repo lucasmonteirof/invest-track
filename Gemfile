@@ -30,4 +30,5 @@ end
 group :test do
   gem "rspec-rails", "~> 8.0"
   gem "factory_bot_rails"
+  gem "rails-controller-testing", "~> 1.0", ">= 1.0.5"
 end
