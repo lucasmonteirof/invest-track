@@ -25,6 +25,9 @@ end
 
 group :development do
   gem "web-console"
+  gem "guard", "~> 2.19", ">= 2.19.1"
+  gem "guard-rspec", "~> 4.7", ">= 4.7.3"
+  gem "guard-rubocop", "~> 1.5"
 end
 
 group :test do
