@@ -1,6 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
+  describe "GET /users/new" do
+    subject(:get_users) { get new_user_path }
+
+    it "returns HTTP status :ok" do
+      get_users
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders template :new" do
+      get_users
+      expect(response).to render_template(:new)
+    end
+  end
+
   describe "POST /users" do
     subject(:post_users) { post users_path, params: params }
 
