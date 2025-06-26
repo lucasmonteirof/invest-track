@@ -21,3 +21,10 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 end
+
+Shoulda::Matchers.configure do |with|
+  with.integrate do |config|
+    config.test_framework :rspec
+    config.library :rails
+  end
+end
