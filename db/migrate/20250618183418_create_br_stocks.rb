@@ -3,7 +3,7 @@ class CreateBrStocks < ActiveRecord::Migration[8.0]
     create_table :br_stocks do |t|
       t.string :ticker
       t.decimal :price
-      t.references :br_companies, null: false, foreign_key: true
+      t.references :company, null: false, foreign_key: { to_table: :br_companies }
 
       t.timestamps
     end

@@ -21,10 +21,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_183418) do
   create_table "br_stocks", force: :cascade do |t|
     t.string "ticker"
     t.decimal "price"
-    t.integer "br_companies_id", null: false
+    t.integer "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["br_companies_id"], name: "index_br_stocks_on_br_companies_id"
+    t.index ["company_id"], name: "index_br_stocks_on_company_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -37,5 +37,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_18_183418) do
     t.string "password_digest"
   end
 
-  add_foreign_key "br_stocks", "br_companies", column: "br_companies_id"
+  add_foreign_key "br_stocks", "br_companies", column: "company_id"
 end
