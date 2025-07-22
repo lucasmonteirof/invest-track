@@ -1,30 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe "Users", type: :request do
-  describe "GET /users/new" do
-    subject(:get_users) { get new_user_path }
+  describe "GET /register" do
+    subject(:get_register) { get register_path }
 
     it "returns HTTP status :ok" do
-      get_users
+      get_register
       expect(response).to have_http_status(:ok)
     end
 
     it "renders template :new" do
-      get_users
+      get_register
       expect(response).to render_template(:new)
     end
   end
 
-  describe "POST /users" do
-    subject(:post_users) { post users_path, params: params }
+  describe "POST /register" do
+    subject(:post_register) { post register_path, params: params }
 
     shared_examples "invalid user creation" do
       it "does not create a User in database" do
-        expect { post_users }.not_to change(User, :count)
+        expect { post_register }.not_to change(User, :count)
       end
 
       it "responds with status unprocessable_entity" do
-        post_users
+        post_register
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -33,21 +33,21 @@ RSpec.describe "Users", type: :request do
       let(:params) { { user: attributes_for(:user) } }
 
       it "creates a User in database" do
-        expect { post_users }.to change(User, :count).by(1)
+        expect { post_register }.to change(User, :count).by(1)
       end
 
       it "responds status created" do
-        post_users
+        post_register
         expect(response).to have_http_status(:created)
       end
 
       it "does not persist :password" do
-        post_users
+        post_register
         expect(User.last.password).to be_nil
       end
 
       it "digests the password" do
-        post_users
+        post_register
         expect(User.last.password_digest).not_to be_nil
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe "Users", type: :request do
         it_behaves_like "invalid user creation"
 
         it "renders template :new" do
-          post_users
+          post_register
           expect(response.body).to include("Login has already been taken")
         end
       end
