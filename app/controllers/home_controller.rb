@@ -1,9 +1,6 @@
 class HomeController < ApplicationController
+  before_action :require_login
+
   def index
-    if logged_in?
-      head :ok
-    else
-      redirect_to login_path
-    end
   end
 end

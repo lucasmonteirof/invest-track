@@ -4,14 +4,28 @@ RSpec.describe "Users", type: :request do
   describe "GET /register" do
     subject(:get_register) { get register_path }
 
-    it "returns HTTP status :ok" do
-      get_register
-      expect(response).to have_http_status(:ok)
+    context "when user is not logged in" do
+      it "returns HTTP status :ok" do
+        get_register
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "renders template :new" do
+        get_register
+        expect(response).to render_template(:new)
+      end
     end
 
-    it "renders template :new" do
-      get_register
-      expect(response).to render_template(:new)
+    context "when user is logged in" do
+      before do
+        user = create(:user, login: "johndoe", password: "password123")
+        post login_path, params: { session: { login: "johndoe", password: "password123" } }
+      end
+
+      it "redirects to root page" do
+        get_register
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 
@@ -36,9 +50,9 @@ RSpec.describe "Users", type: :request do
         expect { post_register }.to change(User, :count).by(1)
       end
 
-      it "responds status created" do
+      it "redirects to root_path" do
         post_register
-        expect(response).to have_http_status(:created)
+        expect(response).to redirect_to(root_path)
       end
 
       it "does not persist :password" do

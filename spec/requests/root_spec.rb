@@ -13,7 +13,7 @@ RSpec.describe "Root path", type: :request do
   context "when user is logged in" do
     before do
       user = create(:user, login: "johndoe", password: "password123")
-      post login_path, params: { login: "johndoe", password: "password123" }
+      post login_path, params: { session: { login: "johndoe", password: "password123" } }
     end
 
     it "returns HTTP status :ok" do
