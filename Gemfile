@@ -15,7 +15,7 @@ gem "solid_cable"
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
-gem "bcrypt", "~> 3.1", ">= 3.1.12"
+gem "bcrypt", "~> 3.1"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
