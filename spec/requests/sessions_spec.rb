@@ -13,6 +13,21 @@ RSpec.describe "Sessions", type: :request do
       get_login
       expect(response).to render_template(:new)
     end
+
+    it "renders the login form" do
+      get_login
+      expect(response.body).to include('form action="/login"')
+    end
+
+    it "renders the login field" do
+      get_login
+      expect(response.body).to include('name="session[login]"')
+    end
+
+    it "renders the password field" do
+      get_login
+      expect(response.body).to include('name="session[password]"')
+    end
   end
 
   describe "POST /login" do
@@ -23,11 +38,11 @@ RSpec.describe "Sessions", type: :request do
     end
 
     context "with valid credentials" do
-      let(:params) { { login: "johndoe", password: "password123" } }
+      let(:params) { { session: { login: "johndoe", password: "password123" } } }
 
-      it "returns HTTP status :ok" do
+      it "redirects to root_path" do
         post_login
-        expect(response).to have_http_status(:ok)
+        expect(response).to redirect_to(root_path)
       end
 
       it "sets user_id in the session" do
@@ -38,7 +53,7 @@ RSpec.describe "Sessions", type: :request do
     end
 
     context "with invalid params" do
-      let(:params) { { login: "johndoe", password: "invalid_password" } }
+      let(:params) { { session: { login: "johndoe", password: "invalid_password" } } }
 
       it "returns HTTP status :unauthorized" do
         post_login
